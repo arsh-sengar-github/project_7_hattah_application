@@ -6,7 +6,7 @@ import MediaModel from "@/models/media.model";
 export async function GET(request) {
   try {
     await connectDatabase();
-    const currProduct = await ProductModel.find({ deletedAt: null })
+    const currProduct = await ProductModel.find({ deleteType: null })
       .populate("media")
       .limit(8)
       .lean();
