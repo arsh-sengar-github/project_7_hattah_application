@@ -1,12 +1,19 @@
 import axios from "axios";
+import { toastify } from "@/lib/toastify";
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa6";
 import Product from "./product";
 
 const HomeFeaturedProducts = async () => {
-  const { data: productData } = await axios.get(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/product/get-public`
-  );
+  let productData = null;
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/product/get-public`
+    );
+    productData = data;
+  } catch (error) {
+    toastify("error", error.message);
+  }
   if (!productData) {
     return null;
   }
